@@ -1,24 +1,14 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
-
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
-import { Stack } from "expo-router";
-
-import { Redirect } from 'expo-router';
+import { Redirect } from "expo-router";
 
 export default function Index() {
-  return <Redirect href="/(auth)/login" />;
+  return <Redirect href="/(tabs)/homepage" />;
 }
 
 // export default function HomeScreen() {
 //   return (
 //     <>
 //       <Stack.Screen options={{ title: "My App :)" }} />
-    
+
 //     <ParallaxScrollView
 //       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
 //       headerImage={
@@ -27,7 +17,6 @@ export default function Index() {
 //           style={styles.reactLogo}
 //         />
 //       }>
-      
 
 //       <ThemedView style={styles.titleContainer}>
 //         <ThemedText type="title">Hello, I'm Life Buddy AI :)</ThemedText>
