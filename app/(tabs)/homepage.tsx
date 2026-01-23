@@ -76,7 +76,7 @@ export default function HomeScreen() {
             style={styles.chatInput}
             onChangeText={setText}
             value={text}
-            placeholder="Ask Life Buddy..."
+            placeholder="Message life buddy..."
             placeholderTextColor="#999"
           />
 
@@ -112,32 +112,36 @@ const styles = StyleSheet.create({
   // 🔥 Bottom input bar styles
   inputBar: {
     position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
+    bottom: 10,
+    alignSelf: "center",
+    width: "85%", // or 85% if you want tighter
+    maxWidth: 1000, // stops it getting huge on tablets/web
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 12,
-    paddingVertical: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
     backgroundColor: "#f8f8f8",
-    borderTopWidth: 1,
+    borderRadius: 24,
+    borderWidth: 1,
     borderColor: "#e0e0e0",
   },
+
   chatInput: {
     flex: 1,
-    height: 44,
+    height: 36, // was 44
     backgroundColor: "#fff",
-    borderRadius: 22,
-    paddingHorizontal: 16,
+    borderRadius: 18, // was 22
+    paddingHorizontal: 12, // was 16
     borderWidth: 1,
     borderColor: "#ddd",
     color: "#000",
   },
+
   sendButton: {
-    marginLeft: 10,
-    height: 44,
-    paddingHorizontal: 18,
-    borderRadius: 22,
+    marginLeft: 8, // was 10
+    height: 36, // was 44
+    paddingHorizontal: 14, // was 18
+    borderRadius: 18, // was 22
     backgroundColor: "#007AFF",
     alignItems: "center",
     justifyContent: "center",
