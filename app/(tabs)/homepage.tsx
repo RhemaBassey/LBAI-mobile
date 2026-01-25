@@ -41,6 +41,13 @@ export default function HomeScreen() {
             <HelloWave />
           </ThemedView>
 
+          {/* Homepage Image */}
+          <Image
+            source={require("@/assets/images/chatbot.png")}
+            style={styles.mainImage}
+            resizeMode="contain"
+          />
+
           <ThemedView style={styles.stepContainer}>
             <ThemedText type="subtitle">Try it out today!</ThemedText>
             <ThemedText>
@@ -72,6 +79,12 @@ export default function HomeScreen() {
 
         {/* 🔥 Fixed Bottom Input Bar */}
         <View style={styles.inputBar}>
+          {/* 🧠 Avatar / Icon */}
+          <Image
+            source={require("@/assets/images/favicon.png")} // put your image here
+            style={styles.avatar}
+          />
+
           <TextInput
             style={styles.chatInput}
             onChangeText={setText}
@@ -92,6 +105,13 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
+  avatar: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    marginRight: 8,
+  },
+
   titleContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -135,6 +155,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ddd",
     color: "#000",
+  },
+
+  mainImage: {
+    width: "100%",
+    height: 200, // big enough to actually see
+    marginVertical: 16,
+    alignSelf: "center",
   },
 
   sendButton: {
