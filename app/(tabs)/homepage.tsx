@@ -18,6 +18,15 @@ import { ThemedView } from "@/components/themed-view";
 export default function HomeScreen() {
   const [text, setText] = useState("");
 
+  const [messages, setMessages] = useState<string[]>([]);
+
+  const handleSend = () => {
+    if (text.trim() === "") return;
+
+    setMessages((prev) => [...prev, text]);
+    setText(""); // clear input
+  };
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -72,6 +81,14 @@ export default function HomeScreen() {
 
             <ThemedText>{`It will transform your life ^ ^`}</ThemedText>
           </ThemedView>
+          {/* Text Output */}
+          <ThemedView style={{ padding: 16 }}>
+            {messages.map((msg, index) => (
+              <ThemedText key={index} style={{ marginBottom: 8 }}>
+                {msg}
+              </ThemedText>
+            ))}
+          </ThemedView>
 
           {/* Spacer so content isn't hidden behind input */}
           <View style={{ height: 90 }} />
@@ -91,9 +108,15 @@ export default function HomeScreen() {
             value={text}
             placeholder="Message life buddy..."
             placeholderTextColor="#999"
+            returnKeyType="send"
+            blurOnSubmit={false}
+            onSubmitEditing={handleSend}
+            // toggle to allow for sending with enter key
+            multiline={true}
           />
 
-          <TouchableOpacity style={styles.sendButton}>
+          {/* Send Button */}
+          <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
             <ThemedText style={{ color: "#fff", fontWeight: "600" }}>
               Send
             </ThemedText>
