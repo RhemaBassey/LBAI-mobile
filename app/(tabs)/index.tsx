@@ -15,6 +15,8 @@ import ParallaxScrollView from "@/components/parallax-scroll-view";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 
+import { ViewStyle } from "react-native";
+
 export default function HomeScreen() {
   const [text, setText] = useState("");
 
@@ -24,7 +26,13 @@ export default function HomeScreen() {
     if (text.trim() === "") return;
 
     setMessages((prev) => [...prev, text]);
-    setText(""); // clear input
+    setText(""); // clear
+    console.log(messages);
+  };
+  const CHAT_WIDTH: ViewStyle = {
+    width: "85%", // or 85% if you want tighter
+    maxWidth: 1000, // stops it getting huge on tablets/web
+    alignSelf: "center", // 👈 centers it like the input bar
   };
 
   return (
@@ -45,7 +53,7 @@ export default function HomeScreen() {
             />
           }
         >
-          <ThemedView style={styles.titleContainer}>
+          <ThemedView style={[styles.titleContainer, CHAT_WIDTH]}>
             <ThemedText type="title">Life Buddy AI</ThemedText>
             <HelloWave />
           </ThemedView>
@@ -57,20 +65,38 @@ export default function HomeScreen() {
             resizeMode="contain"
           />
 
-          <ThemedView style={styles.stepContainer}>
+          <ThemedView style={[styles.stepContainer, CHAT_WIDTH]}>
             <Link href="/modal">
               <ThemedText type="subtitle">Hi, I'm Life Buddy AI</ThemedText>
             </Link>
 
             <ThemedText>{`I’m here to guide you and keep you company on your life’s journey.`}</ThemedText>
           </ThemedView>
+
           {/* Text Output */}
-          <ThemedView style={{ padding: 16 }}>
-            {messages.map((msg, index) => (
-              <ThemedText key={index} style={{ marginBottom: 8 }}>
-                {msg}
-              </ThemedText>
-            ))}
+          <ThemedView style={[styles.messagesContainer, CHAT_WIDTH]}>
+            {messages.map((msg, index) => {
+              const isRight = index % 2 === 0;
+
+              return (
+                <View
+                  key={index}
+                  style={
+                    isRight
+                      ? styles.messageBubbleRight
+                      : styles.messageBubbleLeft
+                  }
+                >
+                  <ThemedText
+                    style={
+                      isRight ? styles.messageTextRight : styles.messageTextLeft
+                    }
+                  >
+                    {msg}
+                  </ThemedText>
+                </View>
+              );
+            })}
           </ThemedView>
 
           {/* Spacer so content isn't hidden behind input */}
@@ -78,7 +104,7 @@ export default function HomeScreen() {
         </ParallaxScrollView>
 
         {/* 🔥 Fixed Bottom Input Bar */}
-        <View style={styles.inputBar}>
+        <View style={[styles.inputBar, CHAT_WIDTH]}>
           {/* 🧠 Avatar / Icon */}
           <Image
             source={require("@/assets/images/favicon.png")} // put your image here
@@ -95,7 +121,7 @@ export default function HomeScreen() {
             blurOnSubmit={false}
             onSubmitEditing={handleSend}
             // toggle to allow for sending with enter key
-            multiline={true}
+            multiline={false}
           />
 
           {/* Send Button */}
@@ -139,9 +165,6 @@ const styles = StyleSheet.create({
   inputBar: {
     position: "absolute",
     bottom: 10,
-    alignSelf: "center",
-    width: "85%", // or 85% if you want tighter
-    maxWidth: 1000, // stops it getting huge on tablets/web
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: 10,
@@ -161,6 +184,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ddd",
     color: "#000",
+    textAlignVertical: "center", // 👈 this centers the placeholder AND typed text
   },
 
   mainImage: {
@@ -168,6 +192,40 @@ const styles = StyleSheet.create({
     height: 200, // big enough to actually see
     marginVertical: 16,
     alignSelf: "center",
+  },
+
+  messageBubbleRight: {
+    alignSelf: "flex-end", // 👈 pushes bubble to the right
+    backgroundColor: "#007AFF",
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 16,
+    marginBottom: 8,
+    maxWidth: "80%", // prevents full-width bullshit
+  },
+
+  messageBubbleLeft: {
+    alignSelf: "flex-start", // 👈 left side
+    backgroundColor: "#e5e5ea",
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 16,
+    marginBottom: 8,
+    maxWidth: "80%",
+  },
+
+  messagesContainer: {
+    paddingVertical: 16,
+  },
+
+  messageTextRight: {
+    color: "#fff",
+    textAlign: "right", // 👈 aligns text inside bubble
+  },
+
+  messageTextLeft: {
+    color: "#000",
+    textAlign: "left",
   },
 
   sendButton: {
